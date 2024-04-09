@@ -1,0 +1,83 @@
+.root {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  font-weight: 500;
+  width: 100%;
+  transition:
+    color 100ms ease,
+    background-color 100ms ease,
+    border-right 100ms ease,
+    border-color 100ms ease;
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.75px;
+  text-align: left;
+  color: var(--mantine-color-neutral-2);
+
+  &:hover {
+    color : var(--mantine-color-primary-4);
+  .input {
+    outline: 2px solid var(--mantine-color-primary-4);
+    border-radius: 1px;
+    border: none;
+    background: transparent;
+  }
+  }
+  &[data-checked] {
+    background: linear-gradient(90deg, rgba(186, 37, 37, 0) 0%, rgba(210, 77, 77, 0.1) 100%);
+    border-right: 4px solid var(--mantine-color-primary-4);
+    color: var(--mantine-color-primary-4);
+    .input {
+      outline: 2px solid var(--mantine-color-primary-4);
+      border-radius: 1px;
+      border: none;
+      background: transparent;
+    }
+  }
+  & * {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+.input {
+  outline: 2px solid var(--mantine-color-neutral-2);
+  border-radius: 1px;
+  border: none;
+  background: transparent;
+}
+.icon {
+  display: none;
+}
+
+.sideBarItem {
+  display: flex;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  gap: 10px;
+  width: 100%;
+  transition:
+    color 100ms ease,
+    background-color 100ms ease,
+    border-right 100ms ease,
+    border-color 100ms ease;
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.75px;
+  text-align: left;
+  color: var(--mantine-color-neutral-2);
+  &:hover {
+    color : var(--mantine-color-primary-4);
+  }
+  & * {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+
+.sideBarActive {
+  color: var(--mantine-color-primary-4);
+  border-right: 4px solid var(--mantine-color-primary-4);
+  background: linear-gradient(90deg, rgba(186, 37, 37, 0) 0%, rgba(210, 77, 77, 0.1) 100%);
+
+}

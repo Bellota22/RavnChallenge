@@ -1,0 +1,84 @@
+.root {
+  border-radius: var(--mantine-radius-sm);
+  width: calc(100% - 32px);
+  background-color: var(--mantine-color-neutral-4);
+  border: 1px solid var(--mantine-color-neutral-3);
+  height: 100%;
+
+}
+
+.control:hover {
+  background-color: transparent;
+
+}
+.chevron {
+  color: var(--mantine-color-neutral-2);
+  width: 20px;
+  cursor: pointer;
+
+}
+.panelTitle {
+  color: var(--mantine-color-neutral-1);
+  font-weight: 600;
+
+}
+
+.content {
+  padding: 0px 2px;
+  margin: 0px 5px;
+}
+
+
+.mainTaskListContainer {
+  background-color: var(--mantine-color-neutral-5);
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding-bottom: 32px;
+  gap: 10px;
+  height: 100%;
+}
+.item {
+  background-color: var(--mantine-color-neutral-0);
+  border: rem(1px) solid transparent;
+  position: relative;
+  z-index: 0;
+  transition: transform 150ms ease;
+  
+  &[data-active] {
+    transform: scale(1.01);
+    z-index: 1;
+  }
+}
+
+
+
+.tableHeaderItems {
+  color: var(--mantine-color-neutral-1);
+  font-weight: 400;
+  padding: 12px;
+  border-left: white;
+}
+
+.thead {
+  width: calc(100% - 32px);
+  background-color: var(--mantine-color-neutral-4);
+  border: 2px solid var(--mantine-color-neutral-3);
+
+}
+.tr {
+  border-left: 3px solid red;
+  margin-top: 10px;
+  padding: 10px;
+}
+.th{
+  width: 300px;
+
+  border: 1px solid var(--mantine-color-neutral-3);
+}
+.td {
+  width: 300px;
+  border: 1px solid var(--mantine-color-neutral-3);
+
+}
+

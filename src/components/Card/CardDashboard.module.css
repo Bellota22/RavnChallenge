@@ -1,0 +1,70 @@
+
+.card {
+  width: 348px;
+  height: 200px;
+  margin-bottom: 10px;
+  background-color: var(--mantine-color-neutral-4);
+  border-radius: 10px;
+}
+.tagMore {
+  width: auto;
+  height: auto;
+  display: flex;
+  border-radius: 5px;
+
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--mantine-color-neutral-1);
+
+}
+.tag {
+  width: auto;
+  height: auto;
+  padding: 4px 16px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+}
+.tagNeutral {
+  background-color: var(--mantine-color-neutral-3);
+  color: var(--mantine-color-neutral-1);
+}
+.tagPrimary {
+  background-color: rgba(218, 88, 75, 0.1);
+  color: var(--mantine-color-primary-4);
+}
+.tagSecondary {
+  background-color: rgba(112, 178, 82, 0.1);
+  color: var(--mantine-color-secondary-4);
+}
+.tagTertiary {
+  background-color: rgba(229, 180, 84, 0.1);
+  color: var(--mantine-color-tertiary-4);
+}
+.tagQuaternary {
+  background-color: rgba(47, 97, 191, 0.1);
+  color: rgba(47, 97, 191, 1);
+}
+
+.menuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  background-color:var(--mantine-color-neutral-3);
+  border: none;
+  color: var(--mantine-color-neutral-1);
+  
+}
+
+.menuItem:hover {
+  background-color: var(--mantine-color-neutral-4);
+}
+.dropdown {
+  padding: none;
+  border: 1px solid var(--mantine-color-neutral-1);
+  background-color:var(--mantine-color-neutral-3);
+}

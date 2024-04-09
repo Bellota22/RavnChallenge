@@ -1,0 +1,93 @@
+.modalInput {
+  background:  var(--mantine-color-neutral-4);
+  border: none;
+  color: var(--mantine-color-neutral-1);
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+.modalRoot {
+  background-color: white;
+}
+.modalHeader {
+  display: none;
+}
+.modalContent {
+  padding-top: 10px;
+  flex: none;
+  background-color: var(--mantine-color-neutral-4);
+}
+.buttonActionableText {
+  font-weight: 600;
+  font-size: 15px;
+}
+.buttonActionable {
+  background-color: var(--mantine-color-neutral-3);
+}
+.buttonActionable:hover {
+  background-color: var(--mantine-color-neutral-2);
+}
+
+.dropdown {
+  background-color: var(--mantine-color-neutral-4);
+  border: 1px solid var(--mantine-color-neutral-2);
+  padding: 10px;
+  border-radius: 5px;
+}
+.label {
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--mantine-color-neutral-2);
+
+}
+
+.item {
+  border-radius: 5px;
+  background-color: var(--mantine-color-neutral-4);
+  color: var(--mantine-color-neutral-1);
+  font-weight: 400;
+  font-size: 15px;
+}
+.item:hover {
+  background-color: var(--mantine-color-neutral-3);
+}
+.buttonText {
+  font-weight: 400;
+  color: var(--mantine-color-neutral-1);
+  padding: 10px;
+}
+
+
+.buttonCreate{
+  background-color: var(--mantine-color-primary-4);
+
+}
+.buttonCreate:hover {
+  background-color: var(--mantine-color-primary-2);
+}
+.wrapper {
+  background-color:  var(--mantine-color-neutral-4);
+
+}
+
+.dateButton {
+  background: var(--mantine-color-neutral-3);
+  color: var(--mantine-color-neutral-1);
+  width: auto;
+  height: 36px;
+  padding: none;
+  
+}
+.datePickerInput {
+  background:  var(--mantine-color-neutral-3);
+  width: auto;
+  border:none;
+}
+
+.datePickerPlaceholder {
+  width: 100%;
+  color: var(--mantine-color-neutral-1);
+}
+.datePickerValue {
+  color: var(--mantine-color-neutral-1);
+}

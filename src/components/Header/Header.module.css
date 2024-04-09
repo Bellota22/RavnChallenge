@@ -1,0 +1,46 @@
+.barContainer {
+  margin-top: 32px;
+  background-color: var(--mantine-color-neutral-4);
+  border-radius: 10px;
+  padding: 12px 24px 12px 24px;
+  width: 100%;
+  gap: 15px;
+}
+
+.input {
+  background:  var(--mantine-color-neutral-4);
+  border: none;
+  color: var(--mantine-color-neutral-2);
+}
+
+.wrapper {
+  width: 100%;
+
+}
+
+.input::placeholder {
+  color: var(--mantine-color-neutral-2);
+}
+
+.buttonHeader {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 2px;
+}
+.buttonPlusIcon {
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 5px;
+  background-color: var(--mantine-color-primary-4);
+  border: 1px solid var(--mantine-color-primary-4);
+
+}
+.buttonHeaderActive {
+  border: 1px solid var(--mantine-color-primary-4);
+}
+.buttonPlusIcon:hover {
+  background-color: var(--mantine-color-primary-3);
+}
+
+
