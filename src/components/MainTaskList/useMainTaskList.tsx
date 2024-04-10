@@ -1,7 +1,7 @@
 import { Accordion, Text, Table, Flex, Badge } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import { useAppContext } from '../Context';
 import classes from './MainTaskList.module.css';
-import { useEffect, useState } from 'react';
 
 export const useMainTaskList = () => {
   const { loadingTasks, errorTasks, dataTasks, filteredTasks } = useAppContext();
@@ -93,7 +93,7 @@ export const useMainTaskList = () => {
           <Accordion.Panel>
             <Table withTableBorder withColumnBorders>
               <Table.Tbody>
-                {section.tasks.map((task, indexContent) => (
+                {section.tasks.map((task: any, indexContent: any) => (
                   <Table.Tr className={`${classes.tr} ${getRowColor(task.dueDate)}`} key={indexContent}>
                     <Table.Td className={classes.td}>
                       <Text className={classes.tableHeaderItems}>{task.name}</Text>

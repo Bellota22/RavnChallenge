@@ -28,11 +28,16 @@ Follow these steps to set up and run the project on your local machine:
     cd task-manager
     npm install
    ```
-3. **Start the Development Server:**
+3. **Create .env file:**
+   ```bash
+    VITE_URI=https://syn-api-prod.herokuapp.com/graphql/
+    VITE_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwb3NpdGlvbklkIjoiYTMzNWI3ZmMtNGNkOC00ZTYwLTgwYmYtMTEyNjQwMWM1ZTU4IiwicHJvamVjdElkIjoiY2ZiNzYzM2UtZWEyMC00MzMwLWIzYzAtZDBlYjg1ZDA0MmM1IiwiZnVsbE5hbWUiOiJHYWJyaWVsIFZpbGxhbnVldmEgVmVnYSIsImVtYWlsIjoiZ3ZpbGxhbnVldmF2ZWdhQGdtYWlsLmNvbSIsImlhdCI6MTcxMjM0MTQwOX0.cbSRxKibjwpY-MyHV0Bpy3GG3LMcqGC_dTuzYambGqM
+   ```  
+4. **Start the Development Server:**
    ```bash
     npm run dev
    ```
-3. **Start the Development Server:**
+5. **Start the Development Server:**
    Open the Application in your Browser:
 Open your web browser and visit http://localhost:5173
 
