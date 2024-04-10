@@ -5,8 +5,6 @@ import { useMainDashBoard } from './useMainDashbBoard';
 
 function MainDashboard() {
   const { dataDisplay, pointEstimatedHanlde, loadingTasks } = useMainDashBoard();
-  console.log("🚀 ~ MainDashboard ~ dataDisplay:", dataDisplay)
-  
   return (
     <ScrollArea>
       <AppShell.Main className={classes.main}>

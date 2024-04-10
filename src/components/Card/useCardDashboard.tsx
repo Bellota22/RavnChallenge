@@ -28,7 +28,6 @@ export const useCardDashboard = (
     setSelectedStatus,
     deleteTask,
    } = useAppContext();
-   console.log("🚀 ~ status:", status)
 
   function formatDate(date: Date) {
     const day = date.getDate();
