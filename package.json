@@ -19,7 +19,7 @@
     "storybook:build": "storybook build"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.10",
+    "@apollo/client": "^3.3.11",
     "@mantine/core": "7.7.1",
     "@mantine/dates": "^7.7.1",
     "@mantine/hooks": "7.7.1",
