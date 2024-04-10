@@ -22,6 +22,25 @@ interface AppContextType {
   setNewTask: React.Dispatch<React.SetStateAction<any>>;
   deleteTask: any;
   setDeleteTask: React.Dispatch<React.SetStateAction<any>>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedEstimate: string | null;
+  setSelectedEstimate: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedAssignee: string | null;
+  setSelectedAssignee: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedLabel: string | null;
+  setSelectedLabel: React.Dispatch<React.SetStateAction<string | null>>;
+  dateValue: Date | null;
+  setDateValue: React.Dispatch<React.SetStateAction<Date | null>>;
+  selectedTaskId: number;
+  setSelectedTaskId: React.Dispatch<React.SetStateAction<number>>;
+  selectedAssigneeId: string | null;
+  setSelectedAssigneeId: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedStatus: string | null;
+  setSelectedStatus: React.Dispatch<React.SetStateAction<string | null>>;
+  clearModalStates: () => void;
+  filteredTasks: any;
+  setFilteredTasks: React.Dispatch<React.SetStateAction<any>>;
   loadingTasks: boolean;
   loadingUsers: boolean;
   errorTasks: any;
@@ -49,6 +68,25 @@ const AppContext = createContext<AppContextType>({
   setNewTask: () => {},
   deleteTask: undefined,
   setDeleteTask: () => {},
+  isEditing: false,
+  setIsEditing: () => {},
+  selectedEstimate: null,
+  setSelectedEstimate: () => {},
+  selectedAssignee: null,
+  setSelectedAssignee: () => {},
+  selectedLabel: null,
+  setSelectedLabel: () => {},
+  dateValue: null,
+  setDateValue: () => {},
+  selectedTaskId: 0,
+  setSelectedTaskId: () => {},
+  selectedAssigneeId: null,
+  setSelectedAssigneeId: () => {},
+  selectedStatus: null,
+  setSelectedStatus: () => {},
+  clearModalStates: () => {},
+  filteredTasks: [],
+  setFilteredTasks: () => {},
 
   loadingTasks: false,
   loadingUsers: false,
@@ -67,8 +105,17 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
   const [taskTitle, setTaskTitle] = useState('');
   const [newTask, setNewTask] = useState({});
   const [deleteTask, setDeleteTask] = useState(false);
-
+  const [isEditing, setIsEditing] = useState(false);
   const [openCreateTask, setOpenCreateTask] = useState(false);
+  const [dateValue, setDateValue] = useState<Date | null>(null);
+  const [selectedEstimate, setSelectedEstimate] = useState<string | null>(null);
+  const [selectedAssignee, setSelectedAssignee] = useState<string | null>(null);
+  const [selectedAssigneeId, setSelectedAssigneeId] = useState<string | null>(null);
+  const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
+  const [selectedTaskId, setSelectedTaskId] = useState<number>(0);
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+
   const setDashboardExclusive = (value: boolean) => {
     if (!value && dashboard) return;
     if (value) {
@@ -86,12 +133,24 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
   };
   const { refetch: refetchTasks } = useQuery(GET_ALL_TASKS);
   useEffect(() => {
-    if (Object.keys(newTask).length > 0 || deleteTask) {
+    if (Object.keys(newTask).length > 0 || deleteTask || isEditing) {
       refetchTasks();
       setDeleteTask(false);
     }
-  }, [newTask, deleteTask, refetchTasks]);
+  }, [newTask, deleteTask, isEditing, refetchTasks]);
 
+  const clearModalStates = () => {
+    setSlowTransitionOpened(false);
+    setTaskTitle('');
+    setSelectedEstimate(null);
+    setSelectedAssignee(null);
+    setSelectedLabel(null);
+    setDateValue(null);
+    setIsEditing(false);
+    setSelectedTaskId(0);
+    setSelectedAssigneeId(null);
+    setSelectedStatus(null);
+  };
   const { loading: loadingTasks, error: errorTasks, data: dataTasks } = useQuery(GET_ALL_TASKS);
   const { loading: loadingUsers, error: errorUsers, data: dataUsers } = useQuery(GET_ALL_USERS);
   return (
@@ -120,6 +179,25 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
       setNewTask,
       setDeleteTask,
       deleteTask,
+      isEditing,
+      setIsEditing,
+      selectedEstimate,
+      setSelectedEstimate,
+      selectedAssignee,
+      setSelectedAssignee,
+      selectedLabel,
+      setSelectedLabel,
+      dateValue,
+      setDateValue,
+      selectedTaskId,
+      setSelectedTaskId,
+      selectedAssigneeId,
+      setSelectedAssigneeId,
+      clearModalStates,
+      selectedStatus,
+      setSelectedStatus,
+      filteredTasks,
+      setFilteredTasks,
      }}>
       {children}
     </AppContext.Provider>

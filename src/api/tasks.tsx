@@ -12,8 +12,12 @@ export const GET_ALL_TASKS = gql`
       position
       assignee {
         id
+        email
         avatar
         fullName
+        createdAt
+        updatedAt
+        type
       }
     }
   }
@@ -35,6 +39,20 @@ export const DELETE_TASK = gql`
   mutation deleteTask($input: DeleteTaskInput!) {
     deleteTask(input: $input) {
       id
+    }
+  }
+`;
+
+export const EDIT_TASK = gql`
+  mutation updateTask($input: UpdateTaskInput!) {
+    updateTask(input: $input) {
+      dueDate
+      id
+      name
+      pointEstimate
+      status
+      tags
+      
     }
   }
 `;

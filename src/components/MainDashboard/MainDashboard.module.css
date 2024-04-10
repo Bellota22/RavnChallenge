@@ -16,11 +16,19 @@
 
 }
 
+.main {
+  padding-left: 332px;
+  padding-top: 180px;
+  background: var(--mantine-color-neutral-5);
+  @media (max-width: 770px) {
+    padding-left: 32px;
+  }
+}
+
 .content {
   padding: 0px 2px;
   margin: 0px 5px;
 }
-
 
 .mainTaskListContainer {
   background-color: var(--mantine-color-neutral-5);
@@ -30,6 +38,7 @@
   gap: 10px;
   height: 100%;
 }
+
 .item {
   background-color: var(--mantine-color-neutral-0);
   border: rem(1px) solid transparent;
@@ -68,4 +77,13 @@
 }
 .thead {
   width: calc(100% - 32px);
+}
+
+
+.body {
+  width: 348px;
+  height: 200px;
+  margin-bottom: 10px;
+  background-color: blue;
+  border-radius: 10px;
 }

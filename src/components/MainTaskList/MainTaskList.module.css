@@ -6,7 +6,43 @@
   height: 100%;
 
 }
-
+.main {
+  padding-left: 332px;
+  padding-top: 180px;
+  background: var(--mantine-color-neutral-5);
+  @media (max-width: 770px) {
+    padding-left: 32px;
+  }
+}
+.tag {
+  width: auto;
+  height: auto;
+  padding: 4px 16px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+}
+.tagNeutral {
+  background-color: var(--mantine-color-neutral-3);
+  color: var(--mantine-color-neutral-1);
+}
+.tagPrimary {
+  background-color: rgba(218, 88, 75, 0.1);
+  color: var(--mantine-color-primary-4);
+}
+.tagSecondary {
+  background-color: rgba(112, 178, 82, 0.1);
+  color: var(--mantine-color-secondary-4);
+}
+.tagTertiary {
+  background-color: rgba(229, 180, 84, 0.1);
+  color: var(--mantine-color-tertiary-4);
+}
+.tagQuaternary {
+  background-color: rgba(47, 97, 191, 0.1);
+  color: rgba(47, 97, 191, 1);
+}
 .control:hover {
   background-color: transparent;
 
@@ -64,21 +100,31 @@
   width: calc(100% - 32px);
   background-color: var(--mantine-color-neutral-4);
   border: 2px solid var(--mantine-color-neutral-3);
-
+  @media (max-width: 770px) {
+    font-size: 10px;
+  }
 }
 .tr {
-  border-left: 3px solid red;
   margin-top: 10px;
   padding: 10px;
 }
+.red {
+  border-left: 3px solid var(--mantine-color-primary-4);
+}
+.green {
+  border-left: 3px solid var(--mantine-color-secondary-4);
+}
+.yellow {
+  border-left: 3px solid var(--mantine-color-tertiary-4);
+}
+
 .th{
   width: 300px;
-
   border: 1px solid var(--mantine-color-neutral-3);
 }
 .td {
   width: 300px;
   border: 1px solid var(--mantine-color-neutral-3);
-
+  padding-top:10px;
 }
 

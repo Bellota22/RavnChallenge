@@ -4,8 +4,29 @@ import { useAppContext } from '../Context';
 import classes from './CardDashboard.module.css';
 import { DELETE_TASK } from '@/api/tasks';
 
-export const useCardDashboard = (dueDate: string, id: any) => {
-  const { setDeleteTask, deleteTask } = useAppContext();
+export const useCardDashboard = (
+  dueDate: string,
+  id: number,
+  taskTags: [string],
+  estimate: string,
+  title: string,
+  status: string,
+  fullName: string,
+  userId: string,
+) => {
+  const {
+    setDeleteTask,
+    setSlowTransitionOpened,
+    setIsEditing,
+    setTaskTitle,
+    setSelectedEstimate,
+    setSelectedAssignee,
+    setSelectedLabel,
+    setDateValue,
+    setSelectedTaskId,
+    setSelectedAssigneeId,
+    deleteTask,
+   } = useAppContext();
 
   function formatDate(date: Date) {
     const day = date.getDate();
@@ -49,7 +70,6 @@ export const useCardDashboard = (dueDate: string, id: any) => {
 
   const [
     deleteTaskMutation,
-    { loading: deleteTaskLoading, error: deleteTaskError },
    ] = useMutation(DELETE_TASK);
 
   const handleDeleteTask = async () => {
@@ -76,6 +96,18 @@ export const useCardDashboard = (dueDate: string, id: any) => {
       });
     }
   };
+  const estimateFormatted = `${estimate} Points`;
+   const handleEditTask = async () => {
+    setSlowTransitionOpened(true);
+    setIsEditing(true);
+    setTaskTitle(title);
+    setSelectedTaskId(id);
+    setSelectedEstimate(estimateFormatted);
+    setSelectedAssigneeId(userId);
+    setSelectedAssignee(fullName);
+    setSelectedLabel(taskTags[0]);
+    setDateValue(new Date(dueDate));
+  };
   return {
     handleTagColor,
     badgeColor,
@@ -84,5 +116,7 @@ export const useCardDashboard = (dueDate: string, id: any) => {
     deleteTask,
     setDeleteTask,
     handleDeleteTask,
+    handleEditTask,
+    setSlowTransitionOpened,
   };
 };

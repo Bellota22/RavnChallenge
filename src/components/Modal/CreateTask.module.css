@@ -80,6 +80,9 @@
 }
 .datePickerInput {
   background:  var(--mantine-color-neutral-3);
+  color: var(--mantine-color-neutral-1);
+  font-weight: 600;
+  font-size: 15px;
   width: auto;
   border:none;
 }

@@ -7,7 +7,8 @@ import tagIcon from '../../public/tagIcon.svg';
 import estimateIcon from '../../public/estimateIcon.svg';
 import assigneeIcon from '../../public/assigneeIcon.svg';
 import checkboxWhite from '../../public/checkboxWhite.svg';
-import { CREATE_TASK } from '@/api/tasks';
+import statusIcon from '../../public/statusIcon.svg';
+import { CREATE_TASK, EDIT_TASK } from '@/api/tasks';
 
 export const useCreateTask = () => {
   const {
@@ -22,23 +23,37 @@ export const useCreateTask = () => {
     taskTitle,
     setTaskTitle,
     setNewTask,
+    selectedEstimate,
+    setSelectedEstimate,
+    selectedAssignee,
+    setSelectedAssignee,
+    selectedLabel,
+    setSelectedLabel,
+    dateValue,
+    setDateValue,
+    isEditing,
+    setIsEditing,
+    selectedTaskId,
+    clearModalStates,
+    selectedStatus,
+    setSelectedStatus,
   } = useAppContext();
   const [actionablesData, setActionablesData] = useState<MenuData[]>([]);
-  const [dateValue, setDateValue] = useState<Date | null>(null);
-  const [selectedEstimate, setSelectedEstimate] = useState<string | null>(null);
-  const [selectedAssignee, setSelectedAssignee] = useState<string | null>(null);
-  const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
-
+  const estimateLabel = selectedEstimate || 'Estimate';
+  const assigneeLabel = selectedAssignee || 'Assign To...';
+  const labelLabel = selectedLabel || 'Label';
+  const statusLabel = selectedStatus || 'Status';
   useEffect(() => {
     if (!loadingTasks && !errorTasks && dataUsers) {
       const itemsFormatted = dataUsers?.users?.map((users: any) => ({
+        id: users?.id,
         name: users?.fullName,
         icon: users?.avatar || '',
       }));
       setActionablesData([
         {
           icon: estimateIcon,
-          label: 'Estimate',
+          label: estimateLabel,
           items: [
             { name: '0 Points', icon: estimateIcon },
             { name: '1 Points', icon: estimateIcon },
@@ -49,12 +64,23 @@ export const useCreateTask = () => {
         },
         {
           icon: assigneeIcon,
-          label: 'Assign To...',
+          label: assigneeLabel,
           items: itemsFormatted,
         },
         {
+          icon: statusIcon,
+          label: statusLabel,
+          items: [
+            { name: 'BACKLOG', icon: checkboxWhite },
+            { name: 'TODO', icon: checkboxWhite },
+            { name: 'IN_PROGRESS', icon: checkboxWhite },
+            { name: 'DONE', icon: checkboxWhite },
+            { name: 'CANCELLED', icon: checkboxWhite },
+          ],
+        },
+        {
           icon: tagIcon,
-          label: 'Label',
+          label: labelLabel,
           items: [
             { name: 'IOS', icon: checkboxWhite },
             { name: 'ANDROID', icon: checkboxWhite },
@@ -66,7 +92,89 @@ export const useCreateTask = () => {
       ]);
     }
   }, [slowTransitionOpened, dataTasks, loadingTasks, errorTasks]);
-  const handelPointEstimate = (name: string) => {
+
+  const handleOnSelectItem = (menuData: MenuData, name: string) => {
+    if (menuData.label === 'Estimate' || menuData.label === selectedEstimate) {
+      setSelectedEstimate(selectedEstimate === name ? selectedEstimate : name);
+    } else if (menuData.label === 'Assign To...' || menuData.label === selectedAssignee) {
+      setSelectedAssignee(selectedAssignee === name ? '' : name);
+    } else if (menuData.label === 'Status' || menuData.label === selectedStatus) {
+      setSelectedStatus(selectedStatus === name ? '' : name);
+    } else if (menuData.label === 'Label' || menuData.label === selectedLabel) {
+      setSelectedLabel(selectedLabel === name ? '' : name);
+    }
+  };
+
+  const [createTaskMutation] = useMutation(CREATE_TASK);
+  const [updateTaskMutation] = useMutation(EDIT_TASK);
+  const handleCreateTask = async () => {
+    if (!validations()) return;
+    if (isEditing) {
+      await editTask();
+      setIsEditing(false);
+    } else {
+      await createTask();
+    }
+  };
+  const editTask = async () => {
+    try {
+      await updateTaskMutation({
+        variables: {
+          input: {
+            dueDate: dateValue?.toISOString(),
+            id: selectedTaskId,
+            name: taskTitle,
+            pointEstimate: handlePointEstimate(selectedEstimate!),
+            status: selectedStatus,
+            tags: [selectedLabel],
+          },
+        },
+      });
+
+      clearModalStates();
+      notifications.show({
+        title: 'Task edited',
+        message: 'Task has been edited successfully',
+        color: 'green',
+      });
+    } catch (error) {
+      notifications.show({
+        title: 'Error editing task',
+        message: 'An error occurred while editing task',
+        color: 'red',
+      });
+    }
+  };
+  const createTask = async () => {
+    try {
+      const res = await createTaskMutation({
+        variables: {
+          input: {
+            dueDate: dateValue?.toISOString(),
+            name: taskTitle,
+            pointEstimate: handlePointEstimate(selectedEstimate!),
+            status: selectedStatus,
+            tags: [selectedLabel],
+          },
+        },
+      });
+      setNewTask(res.data.createTask);
+      clearModalStates();
+      notifications.show({
+        title: 'Task created',
+        message: 'Task has been created successfully',
+        color: 'green',
+      });
+    } catch (error) {
+      notifications.show({
+        title: 'Error creating task',
+        message: 'An error occurred while creating task',
+        color: 'red',
+      });
+    }
+  };
+
+  const handlePointEstimate = (name: string) => {
     switch (name) {
       case '0 Points':
         return 'ZERO';
@@ -82,19 +190,14 @@ export const useCreateTask = () => {
         return 'ZERO';
     }
   };
-  const [
-    createTaskMutation,
-    { loading: createTaskLoading, error: createTaskError },
-   ] = useMutation(CREATE_TASK);
-
-  const handleCreateTask = async () => {
+  const validations = () => {
     if (!taskTitle) {
       notifications.show({
         title: 'Task title is required',
         message: 'Please provide task title',
         color: 'red',
       });
-      return;
+      return false;
     }
     if (!selectedEstimate) {
       notifications.show({
@@ -102,15 +205,23 @@ export const useCreateTask = () => {
         message: 'Please provide task estimate',
         color: 'red',
       });
-      return;
+      return false;
     }
+    // if (!selectedAssignee) {
+    //   notifications.show({
+    //     title: 'Assignee is required',
+    //     message: 'Please provide task assignee',
+    //     color: 'red',
+    //   });
+    //   return false;
+    // }
     if (!selectedLabel) {
       notifications.show({
         title: 'Label is required',
         message: 'Please provide task label',
         color: 'red',
       });
-      return;
+      return false;
     }
     if (!dateValue) {
       notifications.show({
@@ -118,41 +229,9 @@ export const useCreateTask = () => {
         message: 'Please provide task due date',
         color: 'red',
       });
-      return;
+      return false;
     }
-    try {
-      const res = await createTaskMutation({
-        variables: {
-          input: {
-            dueDate: dateValue?.toISOString(),
-            name: taskTitle,
-            assigneeId: selectedAssignee,
-            pointEstimate: handelPointEstimate(selectedEstimate!),
-            status: 'TODO',
-            tags: selectedLabel,
-          },
-        },
-      });
-      setNewTask(res.data.createTask);
-      setSelectedAssignee('');
-      setSelectedEstimate('');
-      setSelectedLabel('');
-      setDateValue(null);
-      setTaskTitle('');
-      setSlowTransitionOpened(false);
-      notifications.show({
-        title: 'Task created',
-        message: 'Task has been created successfully',
-        color: 'green',
-      });
-    } catch (error) {
-      notifications.show({
-        title: 'Error creating task',
-        message: 'An error occurred while creating task',
-        color: 'red',
-      });
-      console.error('Error creating task:', error);
-    }
+    return true;
   };
   return {
     loadingTasks,
@@ -176,5 +255,8 @@ export const useCreateTask = () => {
     setSlowTransitionOpened,
     setNewTask,
     handleCreateTask,
+    clearModalStates,
+    isEditing,
+    handleOnSelectItem,
   };
 };

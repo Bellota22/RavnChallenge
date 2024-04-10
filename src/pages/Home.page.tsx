@@ -7,9 +7,8 @@ import MainDashboard from '../components/MainDashboard';
 import { useAppContext } from '@/components/Context';
 
 export function HomePage() {
-  // const [opened, { toggle }] = useDisclosure();
-  // const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
-  // const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+  const [mobileOpened] = useDisclosure();
+  const [desktopOpened] = useDisclosure(true);
   const {
     taskList,
     dashboard,
@@ -21,7 +20,7 @@ export function HomePage() {
       navbar={{
         width: 300,
         breakpoint: 'sm',
-        // collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
+        collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
     >
       <SideBar />

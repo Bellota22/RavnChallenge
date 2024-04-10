@@ -12,30 +12,39 @@ import trashIcon from '../../public/trashIcon.svg';
 import classes from './CardDashboard.module.css';
 import { useCardDashboard } from './useCardDashboard';
 
-function CardDashboard({
-  id,
-  title,
-  estimate,
-  dueDate,
-  taskTags,
-  position,
-}: {
+interface CardDashboardProps {
   id: number;
   title: string;
   estimate: string;
   dueDate: string;
   taskTags: [string];
-  avatarUser?: string;
   position?: GLfloat;
-}) {
+  userId?: any;
+  status: string;
+  fullName: string;
+}
+
+function CardDashboard(
+  {
+    id,
+    title,
+    estimate,
+    dueDate,
+    taskTags,
+    position,
+    userId,
+    status,
+    fullName,
+
+  }: CardDashboardProps) {
   const {
     handleTagColor,
     badgeColor,
     badgeText,
     daysDifference,
     handleDeleteTask,
-  } = useCardDashboard(dueDate, id);
-
+    handleEditTask,
+  } = useCardDashboard(dueDate, id, taskTags, estimate, title, userId, status, fullName);
   return (
     <Card
       classNames={{
@@ -58,6 +67,7 @@ function CardDashboard({
             }}
           >
             <Menu.Item
+              onClick={handleEditTask}
               classNames={{
                 item: classes.menuItem,
               }}
@@ -110,12 +120,13 @@ function CardDashboard({
       )}
       </Flex>
       <Flex justify="space-between" gap="15px" mt={10}>
-        <Avatar
-          src={avatar}
-          alt="avatar"
-          h={32}
-          w={32}
-        />
+          <Avatar
+            src={avatar}
+            alt="avatar"
+            h={32}
+            w={32}
+          />
+          <Text c="var(--mantine-color-neutral-1)">{fullName}</Text>
         <Flex gap={10} c="var(--mantine-color-neutral-1)" align="center">
           <Image
             src={clipIcon}

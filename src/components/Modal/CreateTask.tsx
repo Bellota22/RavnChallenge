@@ -8,9 +8,6 @@ import calendarIcon from '../../public/calendarIcon.svg';
 function CreateTaskModal() {
   const {
     actionablesData,
-    setSelectedEstimate,
-    setSelectedAssignee,
-    setSelectedLabel,
     dateValue,
     setDateValue,
     slowTransitionOpened,
@@ -18,11 +15,14 @@ function CreateTaskModal() {
     taskTitle,
     setTaskTitle,
     handleCreateTask,
+    clearModalStates,
+    isEditing,
+    handleOnSelectItem,
    } = useCreateTask();
-  return (
+   return (
     <Modal
       opened={slowTransitionOpened}
-      onClose={() => setSlowTransitionOpened(false)}
+      onClose={clearModalStates}
       transitionProps={{ transition: 'rotate-left' }}
       classNames={{
           body: classes.modalBody,
@@ -39,17 +39,14 @@ function CreateTaskModal() {
           onChange={(event) => setTaskTitle(event.currentTarget.value)}
           rightSectionPointerEvents="all"
         />
+
         <Flex gap={15} align="center">
           {
             actionablesData?.map((menuData: MenuData, index: number) => (
               <ModalActionable
                 key={index}
                 menuData={menuData}
-                onSelectItem={(name) => {
-              if (menuData.label === 'Estimate') setSelectedEstimate(name);
-              else if (menuData.label === 'Assign To...') setSelectedAssignee(name);
-              else if (menuData.label === 'Label') setSelectedLabel(name);
-            }}
+                onSelectItem={(name) => handleOnSelectItem(menuData, name)}
           />
             ))
           }
@@ -80,7 +77,7 @@ function CreateTaskModal() {
             onClick={handleCreateTask}
             className={`${classes.buttonText} ${classes.buttonCreate}`}
           >
-            Create
+            {isEditing ? 'Update' : 'Create'}
           </Button>
         </Flex>
     </Modal>

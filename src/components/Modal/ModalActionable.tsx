@@ -3,6 +3,7 @@ import { useState } from 'react';
 import classes from './CreateTask.module.css';
 
 interface MenuItem {
+  id?: string;
   name: string;
   icon: string;
 }
@@ -19,7 +20,6 @@ interface ModalActionableProps {
 
 function ModalActionable({ menuData, onSelectItem }: ModalActionableProps) {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-
   const handleItemClick = (name: string) => {
     onSelectItem(name);
     setSelectedItem(name);

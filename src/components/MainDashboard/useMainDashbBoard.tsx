@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import { useAppContext } from '../Context';
 
 export const useMainDashBoard = () => {
-  const { loadingTasks, errorTasks, dataTasks } = useAppContext();
-
+  const { loadingTasks, errorTasks, dataTasks, filteredTasks } = useAppContext();
+    const [dataDisplay, setDataDisplay] = useState<any[]>([]);
     const tasksByStatus: { [key: string]: any[] } = {
       BACKLOG: [],
       CANCELLED: [],
@@ -11,13 +12,22 @@ export const useMainDashBoard = () => {
       TODO: [],
     };
 
-    dataTasks?.tasks.forEach((task: any) => {
-      tasksByStatus[task?.status].push(task);
-    });
-    const dataDisplay = Object.entries(tasksByStatus).map(([status, tasks]) => ({
-      status,
-      tasks,
-    }));
+    useEffect(() => {
+      if (filteredTasks.length > 0 && !loadingTasks) {
+        filteredTasks.forEach((task: any) => {
+          tasksByStatus[task?.status].push(task);
+        });
+      } else {
+        dataTasks?.tasks.forEach((task: any) => {
+          tasksByStatus[task?.status].push(task);
+        });
+      }
+      const data = Object.entries(tasksByStatus).map(([status, tasks]) => ({
+        status,
+        tasks,
+      }));
+      setDataDisplay(data);
+    }, [filteredTasks, loadingTasks]);
     const pointEstimatedHanlde = (pointEstimate: string) => {
       switch (pointEstimate) {
         case 'ZERO':
@@ -34,6 +44,7 @@ export const useMainDashBoard = () => {
           return '0';
       }
     };
+
   return {
     loadingTasks,
     errorTasks,

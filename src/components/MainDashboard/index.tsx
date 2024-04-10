@@ -1,13 +1,13 @@
-import { AppShell, Text, Table, ScrollArea } from '@mantine/core';
+import { AppShell, Text, Table, ScrollArea, Skeleton } from '@mantine/core';
 import classes from './MainDashboard.module.css';
 import CardDashboard from '../Card';
 import { useMainDashBoard } from './useMainDashbBoard';
 
 function MainDashboard() {
-  const { dataDisplay, pointEstimatedHanlde } = useMainDashBoard();
+  const { dataDisplay, pointEstimatedHanlde, loadingTasks } = useMainDashBoard();
   return (
     <ScrollArea>
-      <AppShell.Main pt={180} bg="var(--mantine-color-neutral-5)">
+      <AppShell.Main className={classes.main}>
         <Table withRowBorders={false} className={classes.thead}>
           <Table.Thead>
             <Table.Tr>
@@ -23,22 +23,26 @@ function MainDashboard() {
             {dataDisplay.map((section, sectionIndex) => (
                 <Table.Td className={classes.td} key={sectionIndex}>
                   <ScrollArea h="calc(100vh - 300px)" key={sectionIndex}>
-                  {section.tasks.length === 0 ? (
-                      <Text c="white">No tasks in this section</Text>
-                    ) : (
-                      section.tasks.map((task: any, taskIndex: number) => (
-                        <CardDashboard
-                          key={taskIndex}
-                          id={task.id}
-                          title={task.name}
-                          estimate={pointEstimatedHanlde(task.pointEstimate)}
-                          dueDate={task.dueDate}
-                          taskTags={task.tags}
-                          avatarUser={task?.assignee?.avatar}
-                          position={task.position}
-                        />
-                      ))
-                    )}
+                    {section.tasks.length === 0 && !loadingTasks && (<Text c="white">No tasks in this section</Text>)}
+                    {
+                      section.tasks.length > 0 && !loadingTasks &&
+                        section.tasks.map(
+                          (task: any, taskIndex: number) => (
+                          <CardDashboard
+                            key={taskIndex}
+                            id={task.id}
+                            title={task.name}
+                            estimate={pointEstimatedHanlde(task.pointEstimate)}
+                            dueDate={task.dueDate}
+                            taskTags={task.tags}
+                            userId={task?.assignee?.id}
+                            position={task.position}
+                            status={task.status}
+                            fullName={task?.assignee?.fullName}
+                        />)
+                        )
+                    }
+                    {loadingTasks && (<Skeleton w={348} h={200} />)}
                   </ScrollArea>
                 </Table.Td>
               ))}
