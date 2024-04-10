@@ -82,7 +82,7 @@ export const useMainTaskList = () => {
           return classes.tagNeutral;
       }
     };
-    const accordionSections = dataDisplay.map((section, index) => (
+    const accordionSections = dataDisplay.map((section: any, index: any) => (
       <Accordion chevronPosition="left" key={index} classNames={classes}>
         <Accordion.Item value={section.status}>
           <Accordion.Control>
