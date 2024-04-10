@@ -4,7 +4,15 @@ import { useAppContext } from '../Context';
 import classes from './MainTaskList.module.css';
 
 export const useMainTaskList = () => {
-  const { loadingTasks, errorTasks, dataTasks, filteredTasks } = useAppContext();
+  const {
+    loadingTasks,
+    errorTasks,
+    dataTasks,
+    filteredTasks,
+    newTask,
+    deleteTask,
+    isEditing,
+    } = useAppContext();
   const [dataDisplay, setDataDisplay] = useState<any[]>([]);
 
   const titleHeader = [
@@ -37,7 +45,7 @@ export const useMainTaskList = () => {
         tasks,
       }));
       setDataDisplay(data);
-    }, [filteredTasks, loadingTasks]);
+    }, [filteredTasks, loadingTasks, dataTasks, newTask, deleteTask, isEditing]);
     const pointEstimatedHanlde = (pointEstimate: string) => {
       switch (pointEstimate) {
         case 'ZERO':
@@ -84,7 +92,7 @@ export const useMainTaskList = () => {
     };
     const accordionSections = dataDisplay.map((section: any, index: any) => (
       <Accordion chevronPosition="left" key={index} classNames={classes}>
-        <Accordion.Item value={section.status}>
+        <Accordion.Item key={`${section.status}-${index}`} value={section.status}>
           <Accordion.Control>
             <Text className={classes.panelTitle}>
               {section.status}
@@ -95,7 +103,7 @@ export const useMainTaskList = () => {
               <Table.Tbody>
                 {section.tasks.map((task: any, indexContent: any) => (
                   <Table.Tr className={`${classes.tr} ${getRowColor(task.dueDate)}`} key={indexContent}>
-                    <Table.Td className={classes.td}>
+                    <Table.Td key={indexContent} className={classes.td}>
                       <Text className={classes.tableHeaderItems}>{task.name}</Text>
                     </Table.Td>
                     <Table.Td className={classes.td}>

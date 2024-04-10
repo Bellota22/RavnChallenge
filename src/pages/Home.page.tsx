@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, Skeleton, Text } from '@mantine/core';
+import { AppShell } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { SideBar } from '../components/Sidebar';
 import { Header } from '../components/Header';

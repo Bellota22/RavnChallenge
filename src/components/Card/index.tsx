@@ -35,7 +35,6 @@ function CardDashboard(
     userId,
     status,
     fullName,
-
   }: CardDashboardProps) {
   const {
     handleTagColor,
@@ -44,7 +43,7 @@ function CardDashboard(
     daysDifference,
     handleDeleteTask,
     handleEditTask,
-  } = useCardDashboard(dueDate, id, taskTags, estimate, title, userId, status, fullName);
+  } = useCardDashboard(dueDate, id, taskTags, estimate, title, status, userId, fullName);
   return (
     <Card
       classNames={{

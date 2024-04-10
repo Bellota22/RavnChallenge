@@ -2,18 +2,26 @@ import { useEffect, useState } from 'react';
 import { useAppContext } from '../Context';
 
 export const useMainDashBoard = () => {
-  const { loadingTasks, errorTasks, dataTasks, filteredTasks } = useAppContext();
-    const [dataDisplay, setDataDisplay] = useState<any[]>([]);
-    const tasksByStatus: { [key: string]: any[] } = {
-      BACKLOG: [],
-      CANCELLED: [],
-      DONE: [],
-      IN_PROGRESS: [],
-      TODO: [],
-    };
+  const {
+    loadingTasks,
+    errorTasks,
+    dataTasks,
+    filteredTasks,
+    newTask,
+    deleteTask,
+    isEditing,
+  } = useAppContext();
+  const [dataDisplay, setDataDisplay] = useState<any[]>([]);
+  const tasksByStatus: { [key: string]: any[] } = {
+    BACKLOG: [],
+    CANCELLED: [],
+    DONE: [],
+    IN_PROGRESS: [],
+    TODO: [],
+  };
 
     useEffect(() => {
-      if (filteredTasks.length > 0 && !loadingTasks) {
+      if (filteredTasks.length > 0) {
         filteredTasks.forEach((task: any) => {
           tasksByStatus[task?.status].push(task);
         });
@@ -27,7 +35,7 @@ export const useMainDashBoard = () => {
         tasks,
       }));
       setDataDisplay(data);
-    }, [filteredTasks, loadingTasks]);
+    }, [filteredTasks, loadingTasks, dataTasks, newTask, deleteTask, isEditing]);
     const pointEstimatedHanlde = (pointEstimate: string) => {
       switch (pointEstimate) {
         case 'ZERO':

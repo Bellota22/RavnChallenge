@@ -2,6 +2,9 @@
 
 This project is a Task Manager developed as part of a technical test for Raven. It allows users to manage their tasks efficiently and productively.
 
+## LOOM demo
+   https://www.loom.com/share/da312af0aae04be68442874733bac430
+
 ## Features
 
 - **Task Management:** Allows users to create, edit, delete, and mark tasks as completed.

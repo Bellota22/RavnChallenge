@@ -5,6 +5,8 @@ import { useMainDashBoard } from './useMainDashbBoard';
 
 function MainDashboard() {
   const { dataDisplay, pointEstimatedHanlde, loadingTasks } = useMainDashBoard();
+  console.log("🚀 ~ MainDashboard ~ dataDisplay:", dataDisplay)
+  
   return (
     <ScrollArea>
       <AppShell.Main className={classes.main}>
@@ -26,7 +28,7 @@ function MainDashboard() {
                     {section.tasks.length === 0 && !loadingTasks && (<Text c="white">No tasks in this section</Text>)}
                     {
                       section.tasks.length > 0 && !loadingTasks &&
-                        section.tasks.map(
+                        section?.tasks?.map(
                           (task: any, taskIndex: number) => (
                           <CardDashboard
                             key={taskIndex}
@@ -37,9 +39,10 @@ function MainDashboard() {
                             taskTags={task.tags}
                             userId={task?.assignee?.id}
                             position={task.position}
-                            status={task.status}
+                            status={task?.status}
                             fullName={task?.assignee?.fullName}
-                        />)
+                          />
+                      )
                         )
                     }
                     {loadingTasks && (<Skeleton w={348} h={200} />)}

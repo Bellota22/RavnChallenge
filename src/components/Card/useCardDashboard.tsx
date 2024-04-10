@@ -25,8 +25,10 @@ export const useCardDashboard = (
     setDateValue,
     setSelectedTaskId,
     setSelectedAssigneeId,
+    setSelectedStatus,
     deleteTask,
    } = useAppContext();
+   console.log("🚀 ~ status:", status)
 
   function formatDate(date: Date) {
     const day = date.getDate();
@@ -103,6 +105,7 @@ export const useCardDashboard = (
     setTaskTitle(title);
     setSelectedTaskId(id);
     setSelectedEstimate(estimateFormatted);
+    setSelectedStatus(status);
     setSelectedAssigneeId(userId);
     setSelectedAssignee(fullName);
     setSelectedLabel(taskTags[0]);
